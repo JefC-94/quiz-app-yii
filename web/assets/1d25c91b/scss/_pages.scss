@@ -1,0 +1,163 @@
+/*-----------------------------------------------*/
+/*HOME PAGE -------------------------------------*/
+/*-----------------------------------------------*/
+
+.home-welcome, .home-admin{
+    @include flex(column, center, center);
+    text-align:center;
+
+    h1.title{
+        font-size:30px;
+        color:#0e154e;
+        font-weight:800;
+    }
+
+    h2{
+        margin-top:1em;
+    }
+}
+
+.home-admin{
+    background: rgb(204,250,255);
+    background: linear-gradient(0deg, rgba(220,252,255,0.8) 0%, rgba(181,223,255,0.8) 100%);
+}
+
+.home-welcome{
+    background: rgb(255,223,208);
+    background: linear-gradient(0deg, rgba(255,223,208,1) 0%, rgba(255,129,129,1) 100%);
+}
+
+.home-wrap{
+    margin-top:3em;
+    @include flex(row, center, center);
+
+    .startbtn, .signupbtn{
+        padding:0.8em 2em;
+        border-radius:5px;
+        font: 600 100%/1.4 Avenir, "sans-serif";
+        color:white;
+        transition: box-shadow .3s ease;
+    }
+
+    .startbtn{
+        background:  rgba(5,89,153,1);
+        background: linear-gradient(121deg, rgba(5,89,153,1) 0%, rgba(0,212,255,1) 100%);
+
+        &:hover{
+            @include box-shadow(0, 0, 8px, 4px, rgba(0,0,0,.4));
+            //background:  rgba(5,89,153,1);
+            //background: linear-gradient(121deg, rgba(0,212,255,1) 0%, rgba(5,89,153,1) 100%);
+        }
+    }
+
+    .signupbtn{
+        background: rgb(148,1,1);
+        background: linear-gradient(126deg, rgba(148,1,1,1) 0%, rgba(208,72,72,1) 100%);
+
+        &:hover{
+            @include box-shadow(0, 0, 8px, 4px, rgba(0,0,0,.4));
+            //background:  rgba(5,89,153,1);
+            //background: linear-gradient(121deg, rgba(0,212,255,1) 0%, rgba(5,89,153,1) 100%);
+        }
+    }
+}
+
+.signup-team{
+    background: rgb(255,223,208);
+    background: linear-gradient(0deg, rgba(255,223,208,1) 0%, rgba(255,129,129,1) 100%);
+    @include flex(row, center, center);
+
+    .signup-team-wrap{
+        width:400px;
+        text-align:center;
+
+        p.label{
+            font:600 1.2em/1.4 Avenir, "sans-serif";
+        }
+
+        button.signup{
+            font:600 100%/1.4 Avenir, "sans-serif";
+            color:white;
+            padding:0.8em 2em;
+            border-radius:5px;
+            background: rgb(148,1,1);
+            background: linear-gradient(126deg, rgba(148,1,1,1) 0%, rgba(208,72,72,1) 100%);
+            border:none;
+            outline:none;
+            cursor:pointer;
+            transition: box-shadow .3s ease;
+
+            &:hover{
+                @include box-shadow(0, 0, 8px, 4px, rgba(0,0,0,.4));
+                //background:  rgba(5,89,153,1);
+                //background: linear-gradient(121deg, rgba(0,212,255,1) 0%, rgba(5,89,153,1) 100%);
+            }
+        }
+    }
+}
+
+/*-----------------------------------------------*/
+/*LOGIN & LOGOUT PAGE ---------------------------*/
+/*-----------------------------------------------*/
+
+//LOGIN TEAM ( = MEMBER)
+
+.login-team{
+    background: rgb(255,223,208);
+    background: linear-gradient(0deg, rgba(255,223,208,1) 0%, rgba(255,129,129,1) 100%);
+    @include flex(column, center, center);
+
+
+    .login-form{
+
+        .field-loginteamform-rememberme{
+            visibility:hidden;
+            margin:0;
+        }
+    }
+}
+
+
+//These forms get different styling when member functionality is implemented
+
+.signup-form, .login-form, .signup-form, .edit-form{
+
+    .form-group{
+        margin:1.5em 0 2em 0;
+            
+        label{
+            display:none;
+        }
+        
+        input[type="text"], input[type="password"], textarea{
+            display:inline-block;
+            font-size:1em;
+            outline:none;
+            border:none;
+            height:40px;
+            padding-left:.5em;
+            width:200px;
+            border-radius:5px;
+        }
+        
+        input[type="checkbox"]{
+            display:inline-block;
+        }
+    }
+}
+
+/*-----------------------------------------------*/
+/*QUIZ SLIDE PAGES ------------------------------*/
+/*-----------------------------------------------*/
+
+.slide-buttons{
+    position:absolute;
+    right:1em;
+    bottom:2em;
+    @include flex(row, flex-start, flex-start);
+
+    a{
+        margin-left:1em;
+    }
+
+}

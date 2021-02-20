@@ -1,0 +1,209 @@
+/*-----------------------------------------------*/
+/*OVER ONS PAGE ---------------------------------*/
+/*-----------------------------------------------*/
+
+.over-ons-wrap{
+    @include flex(column, space-between, flex-start);
+
+    .over-ons-text{
+        width:100%;
+        
+        p{
+            margin-bottom:1.5em;
+            font-weight:500;
+            font-size:1em;
+        }
+    }
+
+    .over-ons-images{
+        width:100%;
+        @include flex(row, space-between, flex-start);
+        margin-top:2em;
+
+        img{
+            width:30%;
+        }
+    }
+
+}
+
+@media screen and (max-width:$smallscreen){
+
+    .over-ons-wrap{
+        
+        .over-ons-text{
+            width:100%;
+            
+            p{
+                font-size:.8em;
+            }
+        }
+
+        .over-ons-images{
+            width:100%;
+            @include flex(column, space-between, center);
+            margin-top:2em;
+    
+            img{
+                width:90%;
+                margin-bottom:2em;
+
+                &:last-of-type{
+                    margin-bottom:0;
+                }
+            }
+        }
+    
+    }
+
+}
+
+
+/*-----------------------------------------------*/
+/*LOGIN & LOGOUT PAGE ---------------------------*/
+/*-----------------------------------------------*/
+
+//These forms get different styling when member functionality is implemented
+
+.signup-form, .login-form, .signup-form, .edit-form{
+
+    .form-group{
+        margin:1em;
+            
+        label{
+            margin-bottom:.3em;
+        }
+        
+        input, textarea{
+            display:block;
+            font-size:1em;
+        }
+        
+        input[type="text"], input[type="password"]{
+            min-height:30px;
+            max-width:500px;
+        }
+        
+        textarea{
+            font-family:$hoofdfont;
+            min-width:100%;
+        }
+        
+        input[type="checkbox"]{
+            display:inline-block;
+        }
+    }
+}
+
+
+/*-----------------------------------------------*/
+/*-MAIL SIGNUP PAGE -----------------------------*/
+/*-----------------------------------------------*/
+
+#mailcontact-form{
+    display:flex;
+
+    .form-group{
+        //display:flex;
+        margin:1em;
+        width:160px;
+            
+        label{
+            min-width:100px;
+            margin-bottom:.3em;
+        }
+        
+        input, textarea{
+            display:block;
+            font-size:1em;
+        }
+        
+        input[type="text"]{
+            min-height:30px;
+            max-width:500px;
+        }
+        
+        textarea{
+            font-family:$hoofdfont;
+            min-width:100%;
+        }
+        
+        input[type="checkbox"]{
+            display:inline-block;
+        }
+    }
+}
+
+
+/*-----------------------------------------------*/
+/*CONTACT PAGE ----------------------------------*/
+/*-----------------------------------------------*/
+
+.contact-wrap{
+
+    #contact-form{
+        
+        .form-group{
+            margin:1em;
+                
+            label{
+                margin-bottom:.3em;
+                //vertical-align:top;
+            }
+            
+            input, textarea{
+                display:block;
+                font-size:1em;
+            }
+            
+            input[type="text"]{
+                min-height:30px;
+                min-width:400px;
+            }
+            
+            textarea{
+                min-width:400px;
+            }
+            
+            input[type="checkbox"]{
+                display:inline-block;
+            }   
+        }
+    }
+}
+
+@media screen and (max-width:$smallscreen){
+
+    .contact-wrap{
+
+        #contact-form{
+            
+            .form-group{
+                margin:1em;
+                    
+                label{
+                    margin-bottom:.3em;
+                    //vertical-align:top;
+                }
+                
+                input, textarea{
+                    display:block;
+                    font-size:1em;
+                }
+                
+                input[type="text"]{
+                    min-height:30px;
+                    min-width:100%;
+                }
+                
+                textarea{
+                    min-width:100%;
+                }
+                
+                input[type="checkbox"]{
+                    display:inline-block;
+                }   
+            }
+        }
+    }
+}

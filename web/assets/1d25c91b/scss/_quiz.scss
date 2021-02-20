@@ -1,0 +1,265 @@
+
+/*-----------------------------------------------*/
+/*QUIZ SLIDE PAGES ------------------------------*/
+/*-----------------------------------------------*/
+
+.slide-wrap{
+    padding:2em 3em;
+    max-height:650px;
+    margin: auto auto;
+    position:relative;
+    height:100%;
+
+    p.roundname{
+        color:$accentkleur-g;
+        text-transform: uppercase;
+        font-weight:600;
+        margin-bottom:1em;
+    }
+
+    .image-wrap{
+        width:100%;
+        margin-bottom:1.5em;
+        height:50vh;
+        overflow:hidden;
+        text-align:center;
+
+        img{
+            display:inline-block;
+            height:100%;
+            object-fit:contain;
+        }
+    }
+
+    .question-wrap{
+        margin-top:2em;
+        height:20vh;
+        @include flex(column, space-between, flex-start);
+        
+        h1{
+            font: 600 normal 1.4em/1 "Avenir";
+            text-transform: uppercase;
+            margin-bottom:.6em;
+        }
+    
+        h2.question-inquiry{
+            font: 300 1.5em/1.2 "Avenir";
+        }
+    
+        h3{
+            width:100%;
+            display:block;
+            margin:.5em 0;
+            text-align:right;
+            font: bold 1.5em/1 "Avenir";
+        }
+    
+        .multiple-choice-wrap{
+            width:100%;
+            @include flex(row, flex-start, center);
+    
+            .option{
+                font-size:1.5em;
+                font-weight:600;
+                margin:0 3em;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:$smallscreen){
+
+    .slide-wrap{
+        padding:2em;
+        width:100%;
+
+        .image-wrap{
+            
+            img{
+                width:100%;
+            }
+        }
+    
+        .question-wrap{
+            margin-top:0em;
+            height:20vh;
+            @include flex(column, space-between, flex-start);
+            
+            h1{
+                font: 600 normal 1em/1 "Avenir";
+            }
+        
+            h2.question-inquiry{
+                font: 300 1.2em/1.2 "Avenir";
+            }
+        
+            h3{
+                font: bold 1.1em/1 "Avenir";
+            }
+        
+            .multiple-choice-wrap{
+                width:100%;
+                @include flex(row, flex-start, center);
+                flex-wrap:wrap;
+        
+                .option{
+                    font-size:1.1em;
+                    font-weight:600;
+                    margin:0 1em;
+                }
+            }
+        }
+    }
+}
+
+/*- ROUND START AND SOLUTIONS -------------------*/
+
+.round-start-wrap, .solutions-wrap{
+    background: rgb(227,181,5);
+    background: linear-gradient(135deg, rgba(227,181,5,1) 0%, rgba(223,143,57,1) 100%);
+    @include flex(row, center, center);
+
+    h1{
+        font-size:1.5em;
+        text-transform: uppercase;
+        font-weight:600;
+    }
+}
+
+/*- BUTTONS -------------------------------------*/
+
+.slide-buttons{
+    position:absolute;
+    right:1em;
+    top:2em;
+    @include flex(row, flex-start, center);
+    display:none;
+
+    a{
+        margin-left:1em;
+        font:600 14px/1.2 Avenir, "sans-serif";
+        color:white;
+        background:$accentkleur-r;
+
+        &:hover{
+            //color:white;
+            background:$accentkleur-rd;
+        }
+    }
+}
+
+.team-header{
+    min-height:50px;
+
+    h1{
+        font:600 1.5em/1.4 Avenir, "sans-serif";
+    }
+}
+
+.team-form{
+
+    .question{
+        @include flex(row, space-between, center);
+
+        .form-group{
+            width:65%;
+            margin:1em 0em;
+            
+            input, textarea, select{
+                display:block;
+                margin:.2em 0;
+            }
+    
+            input:read-only{
+                background-color: #ccc;
+            }
+            
+            input:not([type="file"]), textarea, select{
+                border-radius:5px;
+                border:1px solid #ccc;
+                outline:none;
+                padding:0.2em;
+                padding-left:0.5em;
+                min-height:50px;
+                width:100%;
+                font-size:1.3em;
+    
+                &:focus{
+                    @include box-shadow(1px, 1px, 4px, 0, rgba(0,0,0,0.25));
+                }
+            }
+        }
+        
+        input.notes{
+            width:30%;
+            height:35px;
+            display:inline-block;
+            background:#eee;
+            border:1px solid #ddd;
+            border-radius:5px;
+            color:#444;
+            padding-left:.5em;
+            outline:none;
+
+            &:focus{
+                border:1px solid #aaa;
+            }
+        }
+    
+    }   
+}
+
+
+.team-form-end{
+    margin-top:2em;
+    
+    button.form-sendin{
+        padding:0.8em 1.2em;
+        border-radius:5px;
+        border:none;
+        outline:none;
+        font:600 14px/1.2 Avenir, "sans-serif";
+        color:white;
+        background:$accentkleur-r;
+        cursor:pointer;
+        transition:background .3s ease;
+
+        &:hover{
+            background:$accentkleur-rd;
+        }
+    }
+
+}
+
+@media screen and (max-width:$smallscreen){
+
+    .team-header{
+        margin-top:2em;
+
+        h1{
+            font-size:18px;
+        }
+    }
+
+    .team-form{
+
+        .question{
+            margin-bottom:1.3em;
+            @include flex(column, space-between, flex-start);
+    
+            .form-group{
+                width:90%;
+                margin:.5em 0em;
+                
+                input:not([type="file"]), textarea, select{
+                    width:100%;
+                    font-size:1em;
+                }
+            }
+            
+            input.notes{
+                width:50%;
+            }
+        }   
+    }
+}
