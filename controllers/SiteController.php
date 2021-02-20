@@ -170,7 +170,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Logout action.
+     * Logout action for user.
      *
      * @return Response
      */
@@ -182,7 +182,7 @@ class SiteController extends Controller
     }
 
 
-    //** SIGNUP AND LOGIN ACTIONS FOR TEAMS (MEMBERS) ------------------------------- */
+    //** SIGNUP AND LOGIN ACTIONS FOR TEAMS ------------------------------- */
 
     /**
      * 
@@ -236,6 +236,18 @@ class SiteController extends Controller
         return $this->render('signupteam', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Logout action for team.
+     *
+     * @return Response
+     */
+    public function actionTeamlogout()
+    {
+        Yii::$app->team->logout();
+        $url = Url::to(['/home']);
+        return $this->redirect($url);
     }
 
     /**

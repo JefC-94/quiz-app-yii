@@ -61,7 +61,13 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
+            'class' => 'yii\web\User',
             'identityClass' => 'app\models\User',
+            'enableAutoLogin' => true,
+        ],
+        'team' => [
+            'class' => 'yii\web\User',
+            'identityClass' => 'app\models\Team',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -102,19 +108,14 @@ $config = [
                 'over-ons' => 'site/overons',
                 'login' => 'site/login',
                 'logout' => 'site/logout',
+                'teamlogout' => 'site/teamlogout',
                 'signup' => 'site/signup',
                 'signupteam' => 'site/signupteam',
                 'loginteam' => 'site/loginteam',
                 'contact' => 'site/contact',
                 'end' => 'site/end',
                 'mailsignup' => 'site/mailsignup',
-                'mailconfirmation' => 'site/mailconfirmation',
-                'blog' => 'postModule/post/blog',
-                'nieuws' => 'articleModule/article/nieuws',             
-
-                'page/<action:(index|update|create|delete|seo|ajaxupdate|scheduledupdate|updatescheduledupdate|publish|schedule|reschedule|cancelschedule)>' => 'page/<action>',
-                //important: this takes any slug and searches for views in page tabel. Exceptions need to be listed above!
-                '<slug>' => 'page/view',
+                'mailconfirmation' => 'site/mailconfirmation',           
                 
                 'user/<action:(index|create|update|edit|delete|members|resetpassword|assess)>' => 'user/<action>',
                 'user/<id>' => 'user/view',
@@ -124,10 +125,8 @@ $config = [
                 'question/<action:(index|create|delete|update|view|moveitem)>' => 'question/<action>',
                 'question/<id>' => 'question/view',
 
-                //postModule
-                'post/<action:(index|create|delete|update|load|newversion|publish|schedule|reschedule|cancelschedule|scheduledupdate|updatescheduledupdate)>' => 'postModule/post/<action>',
-                'post/<action:(moveitem)>' => 'postModule/post/<action>',
-                'post/<slug>' => 'postModule/post/view',
+                'team/<action:(index|create|delete|update)>' => 'team/<action>',
+                'team/<id>' => 'team/view',
 
                 'profile/<action:(index|create|delete|update)>' => 'profile/<action>',
                 'profile/<slug>' => 'profile/view',
@@ -135,25 +134,8 @@ $config = [
                 'mailcontact/<action:(index|create|delete|update)>' => 'mailcontactModule/mailcontact/<action>',
                 'mailcontact/<slug>' => 'mailcontactModule/mailcontact/view',
 
-                'popup/<action:(index|create|delete|update|load|newsletter)>' => 'popupModule/popup/<action>',
-                'popup/<slug>' => 'popupModule/popup/view',
-
-                'testimonial/<action:(index|create|delete|update|ajaxview)>' => 'testimonialModule/testimonial/<action>',
-                'testimonial/<slug>' => 'testimonialModule/testimonial/view',
-
-                'keyword/<action:(index|create|delete|update)>' => 'keywordModule/keyword/<action>',
-                'keyword/<slug>' => 'keywordModule/keyword/view',
-
                 'slider/<action:(index|create|delete|update|singleview|duoview|quadview|adminview)>' => 'sliderModule/slider/<action>',
                 'slide/<action:(index|create|delete|update|view|moveslideup|moveslidedown|moveslidefirst|moveslidelast)>' => 'sliderModule/slide/<action>',
-
-                //no view pages necessary
-                'category/<action:\w+>' => 'postModule/category/<action>',
-                'tag/<action:\w+>' => 'postModule/tag/<action>',
-                
-                //try-out for general rule for all models, not working currently
-                //'<controller:(keyword)>/<action:(index|create|update|delete)>' => 'keywordModule/<controller>/<action>',
-                //'<controller:(keyword)>/<slug>' => 'keywordModule/<controller>/view',
 
             ],
         ],

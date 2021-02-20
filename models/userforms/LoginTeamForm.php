@@ -4,12 +4,12 @@ namespace app\models\userforms;
 
 use Yii;
 use yii\base\Model;
-use app\models\User;
+use app\models\Team;
 
 /**
  * LoginForm is the model behind the login form.
  *
- * @property User|null $user This property is read-only.
+ * @property Team|null $user This property is read-only.
  *
  */
 class LoginTeamForm extends Model
@@ -69,7 +69,7 @@ class LoginTeamForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = Team::findByUsername($this->username);
         }
 
         return $this->_user;

@@ -13,7 +13,6 @@ use kartik\password\StrengthValidator;
 *
 * @property int $id
 * @property string $username
-* @property string $score
 * @property string $email
 * @property string $password
 * @property string $auth_key
@@ -225,21 +224,6 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function getUserRole()
     {
         return $this->hasMany(UserRole::className(), ['user_id' => 'id']);
-    }
-
-    public function getRecord()
-    {
-        return $this->hasMany(Record::className(), ['team_id' => 'id']);
-    }
-
-    public function getCompletedRounds($id)
-    {
-        $rounds = Record::find()->select('round.order_index')->distinct()->where(['team_id' => $id])->innerJoinWith('round');  
-        
-        //return $rounds->createCommand()->getRawSql();
-        
-        return $rounds->all();
-
     }
 
 }
