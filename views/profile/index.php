@@ -29,7 +29,6 @@ $sessionUser = Yii::$app->user->identity;
                 <th>Company</th>
                 <th>Image</th>
                 <th>User</th>
-                <th>Posts</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -62,7 +61,6 @@ $sessionUser = Yii::$app->user->identity;
                         <a class="link" href="<?php echo Url::to(['/user/view', 'id' => $user->id]) ?>"><?php echo $user->username ?></a>
                         <?php } ?>
                     </td>
-                    <td><?php echo count($profile->posts); ?></td>
                     <td>
                         <?php 
                             if($sessionUser->isAdmin() and !$profile->user){

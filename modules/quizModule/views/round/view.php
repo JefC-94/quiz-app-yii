@@ -16,15 +16,10 @@ $sessionUser = Yii::$app->user->identity;
 ?>
 <div class="container inner">
 
-    <div class="back-to-index">
-        <?php 
-            echo Html::a('Back to rounds', ['round/index']);
-        ?>
-    </div>
-
     <h1 class="admin"><?= Html::encode($this->title) ?></h1>
 
     <div class="userzone">
+        <?= Html::a('Back to quiz', ['quiz/view', 'slug' => $model->quiz->slug], ['class' => 'userzonebtn']); ?>
         <?= Html::a('Add Question', ['question/create', 'slug' => $model->slug], ['class' => 'userzonebtn']); ?>
 
         <?= Html::a('Update', ['update', 'slug' => $model->slug], ['class' => 'userzonebtn']) ?>

@@ -1,12 +1,14 @@
 <?php
 
-namespace app\models;
+namespace app\modules\quizModule\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\web\UploadedFile;
+use app\modules\quizModule\models\Quiz;
+use app\modules\quizModule\models\QuizSearch;
 
 /**
  * This is the model class for table "round".
@@ -71,6 +73,15 @@ class Round extends \yii\db\ActiveRecord
     {
         return self::findOne(['slug' => $slug]);
     }
+
+
+    public function getQuiz()
+    {
+        return $this->hasOne(Quiz::className(), ['id' => 'quiz_id']);
+    }
+
+
+
 
     /**
      * Gets query for [[Questions]].

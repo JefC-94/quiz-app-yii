@@ -1,11 +1,11 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\quizModule\controllers;
 
 use Yii;
-use app\models\Question;
-use app\models\Round;
-use app\models\QuestionSearch;
+use app\modules\quizModule\models\Question;
+use app\modules\quizModule\models\Round;
+use app\modules\quizModule\models\QuestionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

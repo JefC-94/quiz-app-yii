@@ -42,13 +42,6 @@ $sessionUser = Yii::$app->user->identity;
             <?php
                 $rounds = $dataProvider->getModels();
 
-                if(count($rounds) == 0 ){ ?>
-                    <script>
-                        $(".noresults").show();
-                    </script>
-                <?php
-                }
-
                 foreach($rounds as $round){
                     $id = $round->id;
                     $name = $round->name;

@@ -120,10 +120,17 @@ $config = [
                 'user/<action:(index|create|update|edit|delete|members|resetpassword|assess)>' => 'user/<action>',
                 'user/<id>' => 'user/view',
 
-                'round/<action:(index|create|delete|update|moveitem|start|solutions|startquiz|viewquestion|viewsolution|previousround|form)>' => 'round/<action>',
-                'round/<slug>' => 'round/view',
-                'question/<action:(index|create|delete|update|view|moveitem)>' => 'question/<action>',
-                'question/<id>' => 'question/view',
+                'quiz/<action:(index|create|update|delete)>' => 'quizModule/quiz/<action>',
+                'quiz/<slug>' => 'quizModule/quiz/view',
+
+                'round/<action:(index|create|delete|update|moveitem|start|solutions|startquiz|viewquestion|viewsolution|previousround|form)>' => 'quizModule/round/<action>',
+                'round/<slug>' => 'quizModule/round/view',
+
+                'question/<action:(index|create|delete|update|view|moveitem)>' => 'quizModule/question/<action>',
+                'question/<id>' => 'quizModule/question/view',
+
+                'quiz-event/<action:(index|create|delete|update|view)>' => 'quizModule/quiz-event/<action>',
+                'quiz-event/<id>' => 'quizModule/quiz-event/view',
 
                 'team/<action:(index|create|delete|update)>' => 'team/<action>',
                 'team/<id>' => 'team/view',

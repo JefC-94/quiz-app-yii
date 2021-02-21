@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 use yii\db\ActiveRecord;
 use app\models\Profile;
-use app\models\Record;
+use app\modules\quizModule\models\Record;
 use kartik\password\StrengthValidator;
 
 /**

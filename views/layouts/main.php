@@ -56,6 +56,8 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                     <ul class="list-unstyled">
                         <li class="<?php if($this->title == 'Users'){echo 'active';} ?>"><?php echo Html::a('Users', ['/user/index'], ['class' => 'userpanelbtn']); ?></li>
                         <li class="<?php if($this->title == 'Teams'){echo 'active';} ?>"><?php echo Html::a('Teams', ['/team/index'], ['class' => 'userpanelbtn']); ?></li>
+                        <li class="<?php if($this->title == 'Quizzes'){echo 'active';} ?>"><?php echo Html::a('Quizzes', ['/quiz/index'], ['class' => 'userpanelbtn']); ?></li>
+                        <li class="<?php if($this->title == 'Quiz Events'){echo 'active';} ?>"><?php echo Html::a('Quiz Events', ['/quiz-event/index'], ['class' => 'userpanelbtn']); ?></li>
                         <li class="<?php if($this->title == 'Rounds'){echo 'active';} ?>"><?php echo Html::a('Rounds', ['/round/index'], ['class' => 'userpanelbtn']); ?></li>
                     </ul>    
                 </div>

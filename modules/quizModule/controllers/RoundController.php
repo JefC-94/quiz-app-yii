@@ -1,11 +1,11 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\quizModule\controllers;
 
 use Yii;
-use app\models\Round;
-use app\models\RoundSearch;
-use app\models\Question;
+use app\modules\quizModule\models\Round;
+use app\modules\quizModule\models\RoundSearch;
+use app\modules\quizModule\models\Question;
 use app\models\Record;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

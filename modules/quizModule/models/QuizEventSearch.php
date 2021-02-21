@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace app\modules\quizModule\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Page;
+use app\modules\quizModule\models\QuizEvent;
 
 /**
- * PageSearch represents the model behind the search form of `app\models\Page`.
+ * QuizEventSearch represents the model behind the search form of `app\modules\quizModule\models\QuizEvent`.
  */
-class PageSearch extends Page
+class QuizEventSearch extends QuizEvent
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,7 @@ class PageSearch extends Page
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['title', 'slug'], 'safe'],
+            [['id', 'quiz_id', 'created_at'], 'integer'],
         ];
     }
 
@@ -40,7 +39,7 @@ class PageSearch extends Page
      */
     public function search($params)
     {
-        $query = Page::find();
+        $query = QuizEvent::find();
 
         // add conditions that should always apply here
 
@@ -51,13 +50,26 @@ class PageSearch extends Page
         $this->load($params);
 
         if (!$this->validate()) {
-            $query->where('0=1');
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'quiz_id' => $this->quiz_id,
+            'created_at' => $this->created_at,
+        ]);
 
         return $dataProvider;
     }
 
+    public function all($params){
+
+        $query = QuizEvent::find();
+
+        return $query;
+
+    }
 }

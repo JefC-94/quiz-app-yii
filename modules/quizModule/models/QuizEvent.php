@@ -3,6 +3,7 @@
 namespace app\modules\quizModule\models;
 
 use Yii;
+use app\models\Team;
 
 /**
  * This is the model class for table "quiz_event".
@@ -67,4 +68,11 @@ class QuizEvent extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Team::className(), ['quiz_event_id' => 'id']);
     }
+
+    public function getTeamsPaged($pages)
+    {
+        $query = $this->hasMany(Team::className(), ['quiz_event_id' => 'id'])->orderBy('score DESC');
+        return $query->offset($pages->offset)->limit($pages->limit);
+    }
+
 }

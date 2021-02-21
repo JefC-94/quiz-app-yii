@@ -3,6 +3,12 @@
 namespace app\modules\quizModule\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\SluggableBehavior;
+use app\models\Profile;
+use app\modules\quizModule\models\Round;
+use app\modules\quizModule\models\RoundSearch;
 
 /**
  * This is the model class for table "quiz".
@@ -27,13 +33,28 @@ class Quiz extends \yii\db\ActiveRecord
         return 'quiz';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+            [
+                'class' => BlameableBehavior::class,
+                'updatedByAttribute' => false
+            ],
+            [
+                'class' => SluggableBehavior::class,
+                'attribute' => 'name'
+            ]
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['name', 'slug', 'description', 'created_by', 'created_at', 'updated_at'], 'required'],
+            [['name', 'description'], 'required'],
             [['description'], 'string'],
             [['created_by', 'created_at', 'updated_at'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 255],
@@ -65,4 +86,22 @@ class Quiz extends \yii\db\ActiveRecord
     {
         return $this->hasMany(QuizEvent::className(), ['quiz_id' => 'id']);
     }
+
+
+    public function getCreatedBy()
+    {
+        return $this->hasOne(Profile::className(), ['id' => 'created_by']);
+    }
+
+    public function getRounds()
+    {
+        return $this->hasMany(Round::className(), ['quiz_id' => 'id']);
+    }
+
+    public function getRoundsPaged($pages)
+    {
+        $query = $this->hasMany(Round::className(), ['quiz_id' => 'id'])->orderBy('order_index ASC');
+        return $query->offset($pages->offset)->limit($pages->limit);
+    }
+
 }
