@@ -29,7 +29,7 @@ $sessionUser = Yii::$app->user->identity;
 
         <thead>
             <tr>
-                <th>Index</th>
+                <th>Unique ID</th>
                 <th>Quiz</th>
                 <th>Number of Teams</th>
                 <?php if($sessionUser->isAdmin()){
@@ -43,11 +43,12 @@ $sessionUser = Yii::$app->user->identity;
 
                 foreach($quizEvents as $quizEvent){
                     $id = $quizEvent->id;
+                    $uuid = $quizEvent->uuid;
                     $quiz = $quizEvent->quiz;
             ?>
                 <tr>
                     <td>
-                        <a class="link" href="<?php echo \yii\helpers\Url::to(['view', 'id' => $id]) ?>"><?= $id ?></a>
+                        <a class="link" href="<?php echo \yii\helpers\Url::to(['view', 'id' => $id]) ?>"><?= $uuid ?></a>
                     </td>
                     <td>
                         <a class="link" href="<?php echo \yii\helpers\Url::to(['quiz/view', 'slug' => $quiz->slug]) ?>"><?= $quiz->name ?></a>
@@ -55,7 +56,7 @@ $sessionUser = Yii::$app->user->identity;
                     <td><p><?php echo count($quizEvent->teams); ?></p></td>
                     <?php if($sessionUser->isAdmin()){
                         echo "<td>";
-                        echo Html::a('Update', ['update', 'id' => $id], ['class' => 'usertablebtn']);
+                        //echo Html::a('Update', ['update', 'id' => $id], ['class' => 'usertablebtn']);
                         echo Html::a('Delete', ['delete', 'id' => $id], [
                             'class' => 'usertablebtn delete',
                             'data' => [

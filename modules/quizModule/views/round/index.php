@@ -51,7 +51,7 @@ $sessionUser = Yii::$app->user->identity;
                 <tr>
                     <td><?php echo $order_index; ?></td>
                     <td>
-                        <a class="link" href="<?php echo \yii\helpers\Url::to(['/round/view', 'slug' => $slug]) ?>"><?= $name ?></a>
+                        <a class="link" href="<?php echo \yii\helpers\Url::to(['view', 'slug' => $slug]) ?>"><?= $name ?></a>
                     </td>
                     <td><p><?php echo count($round->questions); ?></p></td>
                     <td class='move'>

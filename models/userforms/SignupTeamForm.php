@@ -20,6 +20,7 @@ class SignupTeamForm extends Model
 
     public $team;
     public $username;
+    public $quiz_event_id;
  
     public function rules()
     {
