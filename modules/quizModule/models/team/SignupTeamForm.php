@@ -1,16 +1,16 @@
 <?php
 
-namespace app\models\userforms;
+namespace app\modules\quizModule\models\team;
 
 use Yii;
 use yii\base\Model;
 use yii\helpers\VarDumper;
-use app\models\Team;
+use app\modules\quizModule\models\team\Team;
 use yii\web\ForbiddenHttpException;
 use kartik\password\StrengthValidator;
 
 /**
- * SignupForm is the model behind the signup form.
+ * SignupTeamForm is the model behind the signup form.
  *
  * @property Team|null $user This property is read-only.
  */
@@ -48,7 +48,7 @@ class SignupTeamForm extends Model
      * Signup function bestaat enkel nog indien ik zelf als admin een account moet aanmaken (en dit niet mogelijk is met user create)
      * Throws an Forbidden Error
      */
-    public function signup()
+    public function signup($id)
     {
 
         $team = new Team();
@@ -56,7 +56,7 @@ class SignupTeamForm extends Model
         $team->score = 0;
         $team->access_token = \Yii::$app->security->generateRandomString();
         $team->auth_key = \Yii::$app->security->generateRandomString();
-        $team->quiz_event_id = 1;
+        $team->quiz_event_id = $id;
 
         if($this->validate()){
 

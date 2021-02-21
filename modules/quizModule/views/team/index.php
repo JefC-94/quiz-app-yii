@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <thead>
             <tr>
                 <th>Username</th>
+                <th>Quiz Event Id</th>
                 <th>Completed Rounds</th>
                 <th>Score</th>
         </thead>
@@ -45,6 +46,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <td>
                         <a class="link" href="<?php echo \yii\helpers\Url::to(['/team/view', 'id' => $id]) ?>"><?= $username ?></a>
+                    </td>
+                    <td>
+                        <?= $team->quiz_event_id; ?>
                     </td>
                     <td>
                         <?php foreach($team->getCompletedRounds($id) as $round){echo $round->order_index . "  ";} ?>

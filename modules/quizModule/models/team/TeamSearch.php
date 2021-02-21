@@ -1,13 +1,13 @@
 <?php
 
-namespace app\models;
+namespace app\modules\quizModule\models\team;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Team;
+use app\modules\quizModule\models\team\Team;
 
 /**
- * UserSearch represents the model behind the search form of `app\models\User`.
+ * TeamSearch represents the model behind the search form of `app\models\User`.
  */
 class TeamSearch extends Team
 {

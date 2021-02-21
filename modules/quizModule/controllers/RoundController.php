@@ -6,7 +6,7 @@ use Yii;
 use app\modules\quizModule\models\Round;
 use app\modules\quizModule\models\RoundSearch;
 use app\modules\quizModule\models\Question;
-use app\models\Record;
+use app\modules\quizModule\models\Record;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;

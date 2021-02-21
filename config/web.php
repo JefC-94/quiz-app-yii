@@ -67,7 +67,7 @@ $config = [
         ],
         'team' => [
             'class' => 'yii\web\User',
-            'identityClass' => 'app\models\Team',
+            'identityClass' => 'app\modules\quizModule\models\team\Team',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -129,11 +129,11 @@ $config = [
                 'question/<action:(index|create|delete|update|view|moveitem)>' => 'quizModule/question/<action>',
                 'question/<id>' => 'quizModule/question/view',
 
-                'quiz-event/<action:(index|create|delete|update|view)>' => 'quizModule/quiz-event/<action>',
+                'quiz-event/<action:(index|create|delete|update|view|signupteam|loginteam)>' => 'quizModule/quiz-event/<action>',
                 'quiz-event/<id>' => 'quizModule/quiz-event/view',
 
-                'team/<action:(index|create|delete|update)>' => 'team/<action>',
-                'team/<id>' => 'team/view',
+                'team/<action:(index|create|delete|update)>' => 'quizModule/team/<action>',
+                'team/<id>' => 'quizModule/team/view',
 
                 'profile/<action:(index|create|delete|update)>' => 'profile/<action>',
                 'profile/<slug>' => 'profile/view',

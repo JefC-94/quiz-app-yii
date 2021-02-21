@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
                 <tr>
                     <td>
-                        <a class="link" href="<?php echo \yii\helpers\Url::to(['/team/view', 'id' => $id]) ?>"><?= $username ?></a>
+                        <a class="link" href="<?php echo \yii\helpers\Url::to(['team/view', 'id' => $id]) ?>"><?= $username ?></a>
                     </td>
                     <td>
                         <?php foreach($team->getCompletedRounds($id) as $round){echo $round->order_index . "  ";} ?>

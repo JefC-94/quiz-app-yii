@@ -3,7 +3,7 @@
 namespace app\modules\quizModule\models;
 
 use Yii;
-use app\models\Team;
+use app\modules\quizModule\models\team\Team;
 use yii\behaviors\TimestampBehavior;
 
 /**

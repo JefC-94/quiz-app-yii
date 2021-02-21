@@ -4,7 +4,7 @@ namespace app\modules\quizModule\models;
 
 use Yii;
 use app\modules\quizModule\models\Question;
-use app\models\Team;
+use app\modules\quizModule\models\team\Team;
 
 /**
  * This is the model class for table "record".

@@ -1,12 +1,12 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\quizModule\controllers;
 
 use Yii;
-use app\models\Team;
-use app\models\TeamSearch;
-use app\models\Record;
-use app\models\Question;
+use app\modules\quizModule\models\team\Team;
+use app\modules\quizModule\models\team\TeamSearch;
+use app\modules\quizModule\models\Record;
+use app\modules\quizModule\models\Question;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;

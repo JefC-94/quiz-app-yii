@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\userforms;
+namespace app\modules\quizModule\models\team;
 
 use Yii;
 use yii\base\Model;
-use app\models\Team;
+use app\modules\quizModule\models\team\Team;
 
 /**
  * LoginForm is the model behind the login form.

@@ -98,6 +98,11 @@ class Quiz extends \yii\db\ActiveRecord
         return $this->hasMany(Round::className(), ['quiz_id' => 'id']);
     }
 
+    public function getFirstround()
+    {
+        return $this->hasOne(Round::className(), ['quiz_id' => 'id'])->andFilterWhere(['order_index' => 1]);
+    }
+
     public function getRoundsPaged($pages)
     {
         $query = $this->hasMany(Round::className(), ['quiz_id' => 'id'])->orderBy('order_index ASC');
