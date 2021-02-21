@@ -109,15 +109,21 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                     ?>
                 </p>
                 <?php
-                if(Yii::$app->user->isGuest && Yii::$app->team->isGuest){
+                //if(Yii::$app->user->isGuest && Yii::$app->team->isGuest){
                     echo Html::a('Login', ['/login'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
+                    echo "&nbsp&nbsp&nbsp";
+                    echo Html::a('Signup', ['/signup'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
+                    echo "&nbsp&nbsp&nbsp";
                     echo Html::a('Login Team', ['/loginteam'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
+                    echo "&nbsp&nbsp&nbsp";
                     echo Html::a('Signup Team', ['/signupteam'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
-                }
-                if(Yii::$app->user->isGuest && !Yii::$app->team->isGuest){
+                    echo "&nbsp&nbsp&nbsp";
+                //}
+                //if(Yii::$app->user->isGuest && !Yii::$app->team->isGuest){
                     echo Html::a('Team Logout' , ['/teamlogout'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
-                }
+                //}
                 if(!Yii::$app->user->isGuest && Yii::$app->team->isGuest){
+                    echo "&nbsp&nbsp&nbsp";
                     echo Html::a('Logout' , ['/logout'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
                 }
                 ?>

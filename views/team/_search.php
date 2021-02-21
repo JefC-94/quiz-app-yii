@@ -8,28 +8,20 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="team-search">
+<div class="admin-searchfields">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
     <?= $form->field($model, 'username') ?>
-
-    <?= $form->field($model, 'score') ?>
 
     <?= $form->field($model, 'quiz_event_id') ?>
 
-    <?= $form->field($model, 'auth_key') ?>
-
-    <?php // echo $form->field($model, 'access_token') ?>
-
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton('Search', ['class' => 'usertablebtn']) ?>
+        <?= Html::a('Reset', ['index'], ['class' => 'usertablebtn']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

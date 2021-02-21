@@ -132,8 +132,12 @@ class SiteController extends Controller
             $return_url = Url::to(['/home']);
         }     
 
-        if (!Yii::$app->user->isGuest) {
+        if(!Yii::$app->user->isGuest) {
             return $this->goHome();
+        }
+
+        if(!Yii::$app->team->isGuest){
+            $this->actionActiveround();
         }
 
         $model = new LoginForm();
@@ -155,7 +159,15 @@ class SiteController extends Controller
     public function actionSignup()
     {
         
-        throw new ForbiddenHttpException("You cannot signup for this site.");
+        if(!Yii::$app->user->isGuest){
+            return $this->goHome();
+        }
+
+        if(!Yii::$app->team->isGuest){
+            $this->actionActiveround();
+        }
+
+        //throw new ForbiddenHttpException("You cannot signup for this site.");
 
         $model = new SignupForm();
 
@@ -176,9 +188,18 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
-        Yii::$app->user->logout();
-        $url = Url::to(['/home']);
-        return $this->redirect($url);
+
+        if(!Yii::$app->team->isGuest){
+            $this->actionActiveround();
+            return false;
+        }
+
+        if(!Yii::$app->user->isGuest){
+            Yii::$app->user->logout();
+            $url = Url::to(['/home']);
+            return $this->redirect($url);
+        }
+        
     }
 
 
@@ -203,6 +224,10 @@ class SiteController extends Controller
         }     
 
         if(!Yii::$app->user->isGuest){
+            return $this->goHome();
+        }
+
+        if(!Yii::$app->team->isGuest){
             $this->actionActiveround();
         }
 
@@ -226,6 +251,14 @@ class SiteController extends Controller
     public function actionSignupteam()
     {
         
+        if(!Yii::$app->user->isGuest){
+            return $this->goHome();
+        }
+
+        if(!Yii::$app->team->isGuest){
+            $this->actionActiveround();
+        }
+
         $model = new SignupTeamForm();
 
         if($model->load(Yii::$app->request->post()) && $model->signup()){
@@ -258,7 +291,7 @@ class SiteController extends Controller
     public function actionActiveround()
     {
         $sessionUser = Yii::$app->user->identity;
-        $lastRound = Record::find()->select('')->andWhere(['team_id' => $sessionUser->id])->innerJoinWith('round')->max('round.order_index');
+        $lastRound = Record::find()->select('')->andWhere(['team_id' => Yii::$app->team->id])->innerJoinWith('round')->max('round.order_index');
 
         if(!$lastRound){ $lastRound = 0; }
 

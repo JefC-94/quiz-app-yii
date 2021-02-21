@@ -64,7 +64,7 @@ class TeamController extends Controller
     }
 
     /**
-     * Lists all User models except for members.
+     * Lists all Team models except for members.
      * @return mixed
      */
     public function actionIndex()
@@ -93,37 +93,7 @@ class TeamController extends Controller
     }
 
     /**
-     * Lists all Member models.
-     * @return mixed
-     */
-    public function actionMembers()
-    {
-        
-        $itemsPerPage = 4;
-        if(!isset($_GET['per-page'])){ $_GET['per-page'] = $itemsPerPage; }
-
-        $searchModel = new TeamSearch();
-        $dataProvider = $searchModel->member(Yii::$app->request->queryParams);
-
-        //Get count of models (filtered query)
-        $count = $searchModel->member(Yii::$app->request->queryParams)->query->count();
-
-        //Display the pagination if there are more than $itemsPerPage items;
-        if($count > $itemsPerPage){
-            $pages = new Pagination(['totalCount' => $count, 'pageSize' => $itemsPerPage]);
-        } else {
-            $pages = new Pagination(['totalCount' => $count, 'pageSize' => 0]);
-        }
-
-        return $this->render('members', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'pages' => $pages,
-        ]);
-    }
-
-    /**
-     * Displays a single User model.
+     * Displays a single Team model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -168,7 +138,7 @@ class TeamController extends Controller
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing Team model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -232,7 +202,7 @@ class TeamController extends Controller
 
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing Team model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -248,7 +218,7 @@ class TeamController extends Controller
 
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the Team model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
      * @return Team the loaded model

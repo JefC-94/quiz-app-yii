@@ -57,8 +57,6 @@ class SignupTeamForm extends Model
         $team->auth_key = \Yii::$app->security->generateRandomString();
         $team->quiz_event_id = 1;
 
-        //$team->selectedRoles = ["member"];
-
         if($this->validate()){
 
             if($team->save()){

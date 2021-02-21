@@ -16,7 +16,7 @@ class LoginTeamForm extends Model
 {
     public $username;
     public $rememberMe = true;
-    private $_user = false;
+    private $_team = false;
 
 
     /**
@@ -56,7 +56,7 @@ class LoginTeamForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            return Yii::$app->team->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
         }
         return false;
     }
@@ -68,10 +68,10 @@ class LoginTeamForm extends Model
      */
     public function getUser()
     {
-        if ($this->_user === false) {
-            $this->_user = Team::findByUsername($this->username);
+        if ($this->_team === false) {
+            $this->_team = Team::findByUsername($this->username);
         }
 
-        return $this->_user;
+        return $this->_team;
     }
 }
