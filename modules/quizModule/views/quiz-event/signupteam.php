@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php if (Yii::$app->session->hasFlash('errorSignup')){ ?>
             <div class="alert alert-error">
-                <p>This username is already taken!</p>
+                <p>Deze ploegnaam is al gekozen!</p>
             </div>
         <?php } ?>
     </div>

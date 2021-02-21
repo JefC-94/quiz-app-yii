@@ -1,15 +1,16 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\widgets\DetailView;
 use yii\widgets\LinkPager;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\RoundSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $model app\modules\quizModule\models\Quiz */
 
-$this->title = 'Rounds';
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Quizzes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+\yii\web\YiiAsset::register($this);
 
 $sessionUser = Yii::$app->user->identity;
 
@@ -19,7 +20,16 @@ $sessionUser = Yii::$app->user->identity;
     <h1 class="admin"><?= Html::encode($this->title) ?></h1>
 
     <div class="userzone">
+        <?= Html::a('Back to quizzes overview', ['quiz/index'], ['class' => 'userzonebtn']); ?>
         <?= Html::a('Create Round', ['create'], ['class' => 'userzonebtn']) ?>
+        <?= Html::a('Update', ['update', 'slug' => $model->slug], ['class' => 'userzonebtn']) ?>
+        <?= Html::a('Delete', ['delete', 'slug' => $model->slug], [
+            'class' => 'userzonebtn delete',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
     </div>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -39,17 +49,7 @@ $sessionUser = Yii::$app->user->identity;
                 ?>
         </thead>
         <tbody>
-            <?php
-                $rounds = $dataProvider->getModels();
-
-                if(count($rounds) == 0 ){ ?>
-                    <script>
-                        $(".noresults").show();
-                    </script>
-                <?php
-                }
-
-                foreach($rounds as $round){
+            <?php foreach($rounds as $round){
                     $id = $round->id;
                     $name = $round->name;
                     $slug = $round->slug;
@@ -58,35 +58,35 @@ $sessionUser = Yii::$app->user->identity;
                 <tr>
                     <td><?php echo $order_index; ?></td>
                     <td>
-                        <a class="link" href="<?php echo \yii\helpers\Url::to(['/round/view', 'slug' => $slug]) ?>"><?= $name ?></a>
+                        <a class="link" href="<?php echo \yii\helpers\Url::to(['round/view', 'slug' => $slug]) ?>"><?= $name ?></a>
                     </td>
                     <td><p><?php echo count($round->questions); ?></p></td>
                     <td class='move'>
                     <div class="move-one">
                         <?php 
                         if($order_index !== 1){
-                            echo Html::a('<span class="fa fa-chevron-up"></span>', ['moveitem', 'pos' => 'down', 'slug' => $slug], ['class' => 'arrow prev']);
+                            echo Html::a('<span class="fa fa-chevron-up"></span>', ['round/moveitem', 'pos' => 'down', 'slug' => $slug], ['class' => 'arrow prev']);
                         }
                         if($order_index == $highest_index){} else {
-                            echo Html::a('<span class="fa fa-chevron-down"></span>', ['moveitem', 'pos' => 'up', 'slug' => $slug], ['class' => 'arrow next']);
+                            echo Html::a('<span class="fa fa-chevron-down"></span>', ['round/moveitem', 'pos' => 'up', 'slug' => $slug], ['class' => 'arrow next']);
                         } 
                         ?>
                         </div>
                         <div class="move-all">
                         <?php 
                         if($order_index !== 1){
-                            echo Html::a('<span class="fa fa-chevron-up"></span><span class="fa fa-chevron-up"></span>', ['moveitem', 'pos' => 'first', 'slug' => $slug], ['class' => 'arrow prev']);
+                            echo Html::a('<span class="fa fa-chevron-up"></span><span class="fa fa-chevron-up"></span>', ['round/moveitem', 'pos' => 'first', 'slug' => $slug], ['class' => 'arrow prev']);
                         }
                         if($order_index == $highest_index){} else {
-                            echo Html::a('<span class="fa fa-chevron-down"></span><span class="fa fa-chevron-down"></span>', ['moveitem', 'pos' => 'last', 'slug' => $slug], ['class' => 'arrow next']);
+                            echo Html::a('<span class="fa fa-chevron-down"></span><span class="fa fa-chevron-down"></span>', ['round/moveitem', 'pos' => 'last', 'slug' => $slug], ['class' => 'arrow next']);
                         }
                         ?>
                     </div>
                 </td>
                     <?php if($sessionUser->isAdmin()){
                         echo "<td>";
-                        echo Html::a('Update', ['update', 'slug' => $slug], ['class' => 'usertablebtn']);
-                        echo Html::a('Delete', ['delete', 'slug' => $slug], [
+                        echo Html::a('Update', ['round/update', 'slug' => $slug], ['class' => 'usertablebtn']);
+                        echo Html::a('Delete', ['round/delete', 'slug' => $slug], [
                             'class' => 'usertablebtn delete',
                             'data' => [
                                 'confirm' => 'Are you sure you want to delete this user?',
@@ -110,6 +110,5 @@ $sessionUser = Yii::$app->user->identity;
     ]); ?>
 
     </div>
-
 
 </div>

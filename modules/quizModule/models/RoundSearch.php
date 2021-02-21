@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace app\modules\quizModule\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Question;
+use app\modules\quizModule\models\Round;
 
 /**
- * QuestionSearch represents the model behind the search form of `app\models\Question`.
+ * RoundSearch represents the model behind the search form of `app\models\Round`.
  */
-class QuestionSearch extends Question
+class RoundSearch extends Round
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class QuestionSearch extends Question
     public function rules()
     {
         return [
-            [['id', 'round_id', 'order_index'], 'integer'],
-            [['inquiry', 'image', 'answer', 'wrong_1', 'wrong_2', 'wrong_3'], 'safe'],
+            [['id'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class QuestionSearch extends Question
      */
     public function search($params)
     {
-        $query = Question::find()->orderBy('order_index ASC');
+        $query = Round::find()->orderBy('order_index ASC');
 
         // add conditions that should always apply here
 
@@ -59,15 +59,25 @@ class QuestionSearch extends Question
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'round_id' => $this->round_id,
-            'order_index' => $this->order_index,
         ]);
 
-        $query->andFilterWhere(['like', 'inquiry', $this->inquiry])
-            ->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'answer', $this->answer]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }
 
+    public function all($params)
+    {
+        $query = Round::find();
+
+        $query->andFilterWhere(['like', 'name', $this->name]);
+
+        return $query;
+    }
+
+    public function highestIndex()
+    {
+        $query = Round::find()->max('order_index');
+        return $query;
+    }
 }

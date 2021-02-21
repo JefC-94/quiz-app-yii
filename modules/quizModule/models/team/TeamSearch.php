@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace app\modules\quizModule\models\team;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Page;
+use app\modules\quizModule\models\team\Team;
 
 /**
- * PageSearch represents the model behind the search form of `app\models\Page`.
+ * TeamSearch represents the model behind the search form of `app\models\User`.
  */
-class PageSearch extends Page
+class TeamSearch extends Team
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class PageSearch extends Page
     {
         return [
             [['id'], 'integer'],
-            [['title', 'slug'], 'safe'],
+            [['username', 'auth_key', 'access_token'], 'safe'],
         ];
     }
 
@@ -40,9 +40,9 @@ class PageSearch extends Page
      */
     public function search($params)
     {
-        $query = Page::find();
+        $query = Team::find();
 
-        // add conditions that should always apply here
+        //add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -51,13 +51,14 @@ class PageSearch extends Page
         $this->load($params);
 
         if (!$this->validate()) {
-            $query->where('0=1');
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'username', $this->username]);
 
         return $dataProvider;
     }
-
+    
 }

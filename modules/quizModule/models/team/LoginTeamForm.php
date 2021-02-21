@@ -1,22 +1,22 @@
 <?php
 
-namespace app\models\userforms;
+namespace app\modules\quizModule\models\team;
 
 use Yii;
 use yii\base\Model;
-use app\models\User;
+use app\modules\quizModule\models\team\Team;
 
 /**
  * LoginForm is the model behind the login form.
  *
- * @property User|null $user This property is read-only.
+ * @property Team|null $user This property is read-only.
  *
  */
 class LoginTeamForm extends Model
 {
     public $username;
     public $rememberMe = true;
-    private $_user = false;
+    private $_team = false;
 
 
     /**
@@ -56,7 +56,7 @@ class LoginTeamForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            return Yii::$app->team->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
         }
         return false;
     }
@@ -68,10 +68,10 @@ class LoginTeamForm extends Model
      */
     public function getUser()
     {
-        if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+        if ($this->_team === false) {
+            $this->_team = Team::findByUsername($this->username);
         }
 
-        return $this->_user;
+        return $this->_team;
     }
 }

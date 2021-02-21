@@ -61,7 +61,13 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
+            'class' => 'yii\web\User',
             'identityClass' => 'app\models\User',
+            'enableAutoLogin' => true,
+        ],
+        'team' => [
+            'class' => 'yii\web\User',
+            'identityClass' => 'app\modules\quizModule\models\team\Team',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -102,32 +108,32 @@ $config = [
                 'over-ons' => 'site/overons',
                 'login' => 'site/login',
                 'logout' => 'site/logout',
+                'teamlogout' => 'site/teamlogout',
                 'signup' => 'site/signup',
                 'signupteam' => 'site/signupteam',
                 'loginteam' => 'site/loginteam',
                 'contact' => 'site/contact',
                 'end' => 'site/end',
                 'mailsignup' => 'site/mailsignup',
-                'mailconfirmation' => 'site/mailconfirmation',
-                'blog' => 'postModule/post/blog',
-                'nieuws' => 'articleModule/article/nieuws',             
-
-                'page/<action:(index|update|create|delete|seo|ajaxupdate|scheduledupdate|updatescheduledupdate|publish|schedule|reschedule|cancelschedule)>' => 'page/<action>',
-                //important: this takes any slug and searches for views in page tabel. Exceptions need to be listed above!
-                '<slug>' => 'page/view',
+                'mailconfirmation' => 'site/mailconfirmation',           
                 
                 'user/<action:(index|create|update|edit|delete|members|resetpassword|assess)>' => 'user/<action>',
                 'user/<id>' => 'user/view',
 
-                'round/<action:(index|create|delete|update|moveitem|start|solutions|startquiz|viewquestion|viewsolution|previousround|form)>' => 'round/<action>',
-                'round/<slug>' => 'round/view',
-                'question/<action:(index|create|delete|update|view|moveitem)>' => 'question/<action>',
-                'question/<id>' => 'question/view',
+                'quiz/<action:(index|create|update|delete)>' => 'quizModule/quiz/<action>',
+                'quiz/<slug>' => 'quizModule/quiz/view',
 
-                //postModule
-                'post/<action:(index|create|delete|update|load|newversion|publish|schedule|reschedule|cancelschedule|scheduledupdate|updatescheduledupdate)>' => 'postModule/post/<action>',
-                'post/<action:(moveitem)>' => 'postModule/post/<action>',
-                'post/<slug>' => 'postModule/post/view',
+                'round/<action:(index|create|delete|update|moveitem|start|solutions|startquiz|viewquestion|viewsolution|previousround|form)>' => 'quizModule/round/<action>',
+                'round/<slug>' => 'quizModule/round/view',
+
+                'question/<action:(index|create|delete|update|view|moveitem)>' => 'quizModule/question/<action>',
+                'question/<id>' => 'quizModule/question/view',
+
+                'quiz-event/<action:(index|create|delete|update|view|signupteam|loginteam)>' => 'quizModule/quiz-event/<action>',
+                'quiz-event/<id>' => 'quizModule/quiz-event/view',
+
+                'team/<action:(index|create|delete|update)>' => 'quizModule/team/<action>',
+                'team/<id>' => 'quizModule/team/view',
 
                 'profile/<action:(index|create|delete|update)>' => 'profile/<action>',
                 'profile/<slug>' => 'profile/view',
@@ -135,25 +141,8 @@ $config = [
                 'mailcontact/<action:(index|create|delete|update)>' => 'mailcontactModule/mailcontact/<action>',
                 'mailcontact/<slug>' => 'mailcontactModule/mailcontact/view',
 
-                'popup/<action:(index|create|delete|update|load|newsletter)>' => 'popupModule/popup/<action>',
-                'popup/<slug>' => 'popupModule/popup/view',
-
-                'testimonial/<action:(index|create|delete|update|ajaxview)>' => 'testimonialModule/testimonial/<action>',
-                'testimonial/<slug>' => 'testimonialModule/testimonial/view',
-
-                'keyword/<action:(index|create|delete|update)>' => 'keywordModule/keyword/<action>',
-                'keyword/<slug>' => 'keywordModule/keyword/view',
-
                 'slider/<action:(index|create|delete|update|singleview|duoview|quadview|adminview)>' => 'sliderModule/slider/<action>',
                 'slide/<action:(index|create|delete|update|view|moveslideup|moveslidedown|moveslidefirst|moveslidelast)>' => 'sliderModule/slide/<action>',
-
-                //no view pages necessary
-                'category/<action:\w+>' => 'postModule/category/<action>',
-                'tag/<action:\w+>' => 'postModule/tag/<action>',
-                
-                //try-out for general rule for all models, not working currently
-                //'<controller:(keyword)>/<action:(index|create|update|delete)>' => 'keywordModule/<controller>/<action>',
-                //'<controller:(keyword)>/<slug>' => 'keywordModule/<controller>/view',
 
             ],
         ],

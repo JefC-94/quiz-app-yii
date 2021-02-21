@@ -104,10 +104,5 @@ class Profile extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    protected function getPosts()
-    {
-        return $this->hasMany(Post::className(), ['created_by' => 'id']);
-    }
-
 
 }

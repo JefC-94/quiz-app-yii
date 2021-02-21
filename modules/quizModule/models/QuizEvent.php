@@ -3,12 +3,15 @@
 namespace app\modules\quizModule\models;
 
 use Yii;
+use app\modules\quizModule\models\team\Team;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "quiz_event".
  *
  * @property int $id
  * @property int $quiz_id
+ * @property string $uuid
  * @property int $created_at
  *
  * @property Quiz $quiz
@@ -24,14 +27,22 @@ class QuizEvent extends \yii\db\ActiveRecord
         return 'quiz_event';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['quiz_id', 'created_at'], 'required'],
+            [['quiz_id', 'uuid'], 'required'],
             [['quiz_id', 'created_at'], 'integer'],
+            [['uuid'], 'string'],
             [['quiz_id'], 'exist', 'skipOnError' => true, 'targetClass' => Quiz::className(), 'targetAttribute' => ['quiz_id' => 'id']],
         ];
     }
@@ -44,6 +55,7 @@ class QuizEvent extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'quiz_id' => 'Quiz ID',
+            'uuid' => 'UUID',
             'created_at' => 'Created At',
         ];
     }
@@ -67,4 +79,11 @@ class QuizEvent extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Team::className(), ['quiz_event_id' => 'id']);
     }
+
+    public function getTeamsPaged($pages)
+    {
+        $query = $this->hasMany(Team::className(), ['quiz_event_id' => 'id'])->orderBy('score DESC');
+        return $query->offset($pages->offset)->limit($pages->limit);
+    }
+
 }

@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace app\modules\quizModule\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Round;
+use app\modules\quizModule\models\Quiz;
 
 /**
- * RoundSearch represents the model behind the search form of `app\models\Round`.
+ * QuizSearch represents the model behind the search form of `app\modules\quizModule\models\Quiz`.
  */
-class RoundSearch extends Round
+class QuizSearch extends Quiz
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class RoundSearch extends Round
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'created_by', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'slug', 'description'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class RoundSearch extends Round
      */
     public function search($params)
     {
-        $query = Round::find()->orderBy('order_index ASC');
+        $query = Quiz::find();
 
         // add conditions that should always apply here
 
@@ -59,25 +59,26 @@ class RoundSearch extends Round
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'created_by' => $this->created_by,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'slug', $this->slug])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
 
     public function all($params)
     {
-        $query = Round::find();
+        $query = Quiz::find();
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'slug', $this->slug])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
-        return $query;
-    }
-
-    public function highestIndex()
-    {
-        $query = Round::find()->max('order_index');
         return $query;
     }
 }

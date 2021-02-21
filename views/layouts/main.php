@@ -55,7 +55,8 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 <div class="sectionoptions standard">
                     <ul class="list-unstyled">
                         <li class="<?php if($this->title == 'Users'){echo 'active';} ?>"><?php echo Html::a('Users', ['/user/index'], ['class' => 'userpanelbtn']); ?></li>
-                        <li class="<?php if($this->title == 'Teams'){echo 'active';} ?>"><?php echo Html::a('Teams', ['/user/members'], ['class' => 'userpanelbtn']); ?></li>
+                        <li class="<?php if($this->title == 'Quizzes'){echo 'active';} ?>"><?php echo Html::a('Quizzes', ['/quiz/index'], ['class' => 'userpanelbtn']); ?></li>
+                        <li class="<?php if($this->title == 'Quiz Events'){echo 'active';} ?>"><?php echo Html::a('Quiz Events', ['/quiz-event/index'], ['class' => 'userpanelbtn']); ?></li>
                         <li class="<?php if($this->title == 'Rounds'){echo 'active';} ?>"><?php echo Html::a('Rounds', ['/round/index'], ['class' => 'userpanelbtn']); ?></li>
                     </ul>    
                 </div>
@@ -90,17 +91,10 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
         <!-- COMMENT THIS DIV FOR PRODUCTION? KEEP IT FOR DEVELOPMENT ENVIRONMENT -> EASY LOGIN-LOGOUT -->
         <nav class="memberzone">
             <div class="member-options">
-            <?php if (Yii::$app->user->isGuest){
-                echo Html::a('Login', ['/login'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
-                echo Html::a('Login Team', ['/loginteam'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
-                echo Html::a('Signup Team', ['/signupteam'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
-            } else {
-                if ($sessionUser->isMember()){
-                    echo $sessionUser->username;
-                    echo Html::a('Logout' , ['/logout'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
-                }
-            }
-            ?>
+            <?php if(!Yii::$app->team->isGuest){
+                echo Yii::$app->team->identity->username;
+            } ?>
+            
             </div>
         </nav>
 
@@ -115,6 +109,21 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                         echo "© " . date("Y") . " Jef Ceuppens";
                     ?>
                 </p>
+                <?php
+                //if(Yii::$app->user->isGuest && Yii::$app->team->isGuest){
+                    echo Html::a('Login', ['/login'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
+                    echo "&nbsp&nbsp&nbsp";
+                    echo Html::a('Signup', ['/signup'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
+                    echo "&nbsp&nbsp&nbsp";
+                //}
+                //if(Yii::$app->user->isGuest && !Yii::$app->team->isGuest){
+                    echo Html::a('Team Logout' , ['/teamlogout'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
+                //}
+                if(!Yii::$app->user->isGuest && Yii::$app->team->isGuest){
+                    echo "&nbsp&nbsp&nbsp";
+                    echo Html::a('Logout' , ['/logout'], ['class' => 'memberzonebtn', 'data' => ['method' => 'post']]);
+                }
+                ?>
         </footer>
 
         <!-- SITE WIDE POP-UPS -->

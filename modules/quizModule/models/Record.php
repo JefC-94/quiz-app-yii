@@ -1,9 +1,10 @@
 <?php
 
-namespace app\models;
+namespace app\modules\quizModule\models;
 
 use Yii;
-use app\models\Question;
+use app\modules\quizModule\models\Question;
+use app\modules\quizModule\models\team\Team;
 
 /**
  * This is the model class for table "record".

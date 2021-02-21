@@ -1,12 +1,12 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\quizModule\controllers;
 
 use Yii;
-use app\models\Round;
-use app\models\RoundSearch;
-use app\models\Question;
-use app\models\Record;
+use app\modules\quizModule\models\Round;
+use app\modules\quizModule\models\RoundSearch;
+use app\modules\quizModule\models\Question;
+use app\modules\quizModule\models\Record;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -35,7 +35,7 @@ class RoundController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
+            /* 'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'denyCallback' => function ($rule, $action) {
                     if(Yii::$app->user->isGuest or Yii::$app->user->identity->isMember()){
@@ -61,7 +61,7 @@ class RoundController extends Controller
                         'roles' => ['admin'],
                     ],
                 ],
-            ],
+            ], */
         ];
     }
 
@@ -307,7 +307,7 @@ class RoundController extends Controller
 
         $model = $this->findModel($slug);
 
-        $checkRec = Record::find()->andWhere(['round_id' => $model->id])->andWhere(['team_id' => Yii::$app->user->identity->id])->one();
+        $checkRec = Record::find()->andWhere(['round_id' => $model->id])->andWhere(['team_id' => Yii::$app->team->id])->one();
 
         if($checkRec){
             $this->redirect('home');
@@ -326,7 +326,7 @@ class RoundController extends Controller
             
             foreach($answers as $index => $answer){
                 $obj = new Record();
-                $obj->team_id = Yii::$app->user->identity->id;
+                $obj->team_id = Yii::$app->team->id;
                 $obj->round_id = $model->id;
                 $obj->order_index = $index+1;
                 $obj->answer = $answer;

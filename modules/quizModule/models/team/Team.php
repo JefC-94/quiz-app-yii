@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models;
+namespace app\modules\quizModule\models\team;
 
 use Yii;
 use yii\db\ActiveRecord;
 use app\models\Profile;
-use app\models\Record;
+use app\modules\quizModule\models\Record;
 use kartik\password\StrengthValidator;
 
 /**
@@ -14,8 +14,7 @@ use kartik\password\StrengthValidator;
 * @property int $id
 * @property string $username
 * @property string $score
-* @property string $email
-* @property string $password
+* @property int $quiz_event_id
 * @property string $auth_key
 * @property string $access_token
 */
@@ -45,7 +44,7 @@ class Team extends ActiveRecord implements \yii\web\IdentityInterface
             [['username'], 'unique', 'message' => 'This username is already taken'],
 
             //CREATE & UPDATE
-            [['username', 'auth_key', 'access_token', 'email'], 'required', 'on' => 'create'],
+            [['username', 'quiz_event_id', 'auth_key', 'access_token'], 'required', 'on' => 'create'],
             ['selectedRoles', 'required', 'message' => 'Selecteer minstens 1 categorie', 'on' => 'create'],
             ['selectedRoles', 'required', 'message' => 'Selecteer minstens 1 categorie', 'on' => 'update'],
             
