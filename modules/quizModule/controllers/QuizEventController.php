@@ -6,7 +6,10 @@ use Yii;
 use app\modules\quizModule\models\QuizEvent;
 use app\modules\quizModule\models\QuizEventSearch;
 use app\modules\quizModule\models\team\SignupTeamForm;
+use app\modules\quizModule\models\team\LoginTeamForm;
 use app\modules\quizModule\models\Record;
+use app\modules\quizModule\models\Round;
+use app\modules\quizModule\models\Question;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -16,6 +19,7 @@ use Imagine\Image\Box;
 use Imagine\Image\Point;
 use yii\imagine\Image;
 use yii\data\Pagination;
+use yii\helpers\Url;
 
 /**
  * QuizEventController implements the CRUD actions for QuizEvent model.
@@ -168,10 +172,10 @@ class QuizEventController extends Controller
      *
      * @return Response|string
      */
-    public function actionLoginteam($id)
+    public function actionLoginteam($uuid)
     {
 
-        $quizEvent = $this->findModel($id);
+        $quizEvent = $this->findModelByUuid($uuid);
 
         //TODO: checken of team in deze quiz al ingeschreven is / meedoet!
 
@@ -210,10 +214,10 @@ class QuizEventController extends Controller
      *
      * @return Response|string
      */
-    public function actionSignupteam($id)
+    public function actionSignupteam($uuid)
     {
-
-        $quizEvent = $this->findModel($id);
+        
+        $quizEvent = $this->findModelByUuid($uuid);
         
         if(!Yii::$app->user->isGuest){
             return $this->goHome();
@@ -225,7 +229,7 @@ class QuizEventController extends Controller
 
         $model = new SignupTeamForm();
 
-        if($model->load(Yii::$app->request->post()) && $model->signup($id)){
+        if($model->load(Yii::$app->request->post()) && $model->signup($quizEvent->id)){
             $round = $quizEvent->quiz->firstround;
             return $this->redirect(['round/form', 'slug' => $round->slug]);
             //Dit moet dus naar ronde 1 gaan!
@@ -256,12 +260,13 @@ class QuizEventController extends Controller
      */
     public function actionActiveround()
     {
+        
         $sessionUser = Yii::$app->team->identity;
         $lastRound = Record::find()->select('')->andWhere(['team_id' => Yii::$app->team->id])->innerJoinWith('round')->max('round.order_index');
 
         if(!$lastRound){ $lastRound = 0; }
 
-        $round = Round::getItemsByIndex($lastRound + 1);
+        $round = Round::getItemsByIndex($lastRound + 1, $sessionUser->quizEvent->quiz->id);
 
         if(!$round){
             //TO DO: Change this to "ending page" -> with a thank you message!
@@ -288,7 +293,17 @@ class QuizEventController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function generateRandomString($length = 10) {
+
+    protected function findModelByUuid($uuid)
+    {
+        if(($model = QuizEvent::findOne(['uuid' => $uuid])) !== null){
+            return $model;
+        }
+        
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function generateRandomString($length = 6) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';

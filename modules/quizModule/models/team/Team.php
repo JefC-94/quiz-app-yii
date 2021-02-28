@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use app\models\Profile;
 use app\modules\quizModule\models\Record;
+use app\modules\quizModule\models\QuizEvent;
 use kartik\password\StrengthValidator;
 
 /**
@@ -117,65 +118,10 @@ class Team extends ActiveRecord implements \yii\web\IdentityInterface
         return $this->auth_key === $authKey;
     }
 
-    public function isAdmin()
+    public function getQuizEvent()
     {
-        $query = $this->hasMany(Role::className(), ['id' => 'role_id'])
-        ->viaTable('user_role', ['user_id' => 'id'])
-        ->where(['rolename' => 'admin'])
-        ->all();
-
-        if(empty($query)){
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function isEditor()
-    {
-        $query = $this->hasMany(Role::className(), ['id' => 'role_id'])
-        ->viaTable('user_role', ['user_id' => 'id'])
-        ->where(['rolename' => 'editor'])
-        ->all();
-
-        if(empty($query)){
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function isAuthor()
-    {
-        $query = $this->hasMany(Role::className(), ['id' => 'role_id'])
-        ->viaTable('user_role', ['user_id' => 'id'])
-        ->where(['rolename' => 'author'])
-        ->all();
-
-        if(empty($query)){
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function isMember()
-    {
-        $query = $this->hasMany(Role::className(), ['id' => 'role_id'])
-        ->viaTable('user_role', ['user_id' => 'id'])
-        ->where(['rolename' => 'member'])
-        ->all();
-
-        if(empty($query)){
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function getUserRole()
-    {
-        return $this->hasMany(UserRole::className(), ['user_id' => 'id']);
+        
+        return $this->hasOne(QuizEvent::className(), ['id' => 'quiz_event_id']);
     }
 
     public function getRecord()

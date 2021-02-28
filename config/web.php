@@ -49,10 +49,6 @@ $config = [
                 ],
             ],
         ],
-        /* 'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-            'defaultRoles' => ['guest'],
-        ], */
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'GI4G9buPlXXy7UtWlYOYLK3LxkrB4Sh7',
@@ -129,8 +125,10 @@ $config = [
                 'question/<action:(index|create|delete|update|view|moveitem)>' => 'quizModule/question/<action>',
                 'question/<id>' => 'quizModule/question/view',
 
-                'quiz-event/<action:(index|create|delete|update|view|startquiz|signupteam|loginteam)>' => 'quizModule/quiz-event/<action>',
+                'quiz-event/<action:(index|create|delete|update|view|startquiz|signupteam|loginteam|activeround)>' => 'quizModule/quiz-event/<action>',
                 'quiz-event/<id>' => 'quizModule/quiz-event/view',
+
+                '<uuid>/<action:(signupteam)>' => 'quizModule/quiz-event/signupteam',
 
                 'team/<action:(index|create|delete|update)>' => 'quizModule/team/<action>',
                 'team/<id>' => 'quizModule/team/view',
