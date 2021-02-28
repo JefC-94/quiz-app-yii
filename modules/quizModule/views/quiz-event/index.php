@@ -56,7 +56,7 @@ $sessionUser = Yii::$app->user->identity;
                     <td><p><?php echo count($quizEvent->teams); ?></p></td>
                     <?php if($sessionUser->isAdmin()){
                         echo "<td>";
-                        //echo Html::a('Update', ['update', 'id' => $id], ['class' => 'usertablebtn']);
+                        echo Html::a('Start quiz', ['startquiz', 'id' => $id], ['class' => 'usertablebtn']);
                         echo Html::a('Delete', ['delete', 'id' => $id], [
                             'class' => 'usertablebtn delete',
                             'data' => [

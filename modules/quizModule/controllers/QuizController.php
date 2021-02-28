@@ -51,11 +51,7 @@ class QuizController extends Controller
         //Get total of models
         $countAll = $searchModel->all(Yii::$app->request->queryParams)->count();
 
-        if($countAll > $itemsPerPage){
-            $pages = new Pagination(['totalCount' => $countAll, 'PageSize' => $itemsPerPage]);
-        } else {
-            $pages = new Pagination(['totalCount' => $countAll, 'PageSize' => 0]);
-        }
+        $pages = new Pagination(['totalCount' => $countAll, 'PageSize' => $itemsPerPage]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -73,11 +69,14 @@ class QuizController extends Controller
     public function actionView($slug)
     {
 
+        $itemsPerPage = 10;
+        if(!isset($_GET['per-page'])){$_GET['per-page'] = $itemsPerPage;}
+
         $model = $this->findModel($slug);
 
         $highest_index = count($model->rounds);
 
-        $pages = new Pagination(['totalCount' => $highest_index]);
+        $pages = new Pagination(['totalCount' => $highest_index, 'PageSize' => $itemsPerPage]);
 
         $rounds = $model->getRoundsPaged($pages)->all();
 
@@ -140,7 +139,7 @@ class QuizController extends Controller
 
         return $this->redirect(['index']);
     }
-
+    
     /**
      * Finds the Quiz model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

@@ -78,6 +78,14 @@ class Quiz extends \yii\db\ActiveRecord
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getQuiz($slug)
+    {
+        return self::findOne(['slug' => $slug]);
+    }
+
+    /**
      * Gets query for [[QuizEvents]].
      *
      * @return \yii\db\ActiveQuery

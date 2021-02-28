@@ -145,6 +145,20 @@ class QuizEventController extends Controller
         return $this->redirect(['index']);
     }
 
+    //** START THE QUIZ */
+
+    /**
+     * Finds the first round, immediately starts this
+     */
+    public function actionStartquiz($id)
+    {
+
+        $model = $this->findModel($id);
+        $first_round = $model->quiz->firstround;
+
+        return $this->redirect(['/round/start', 'slug' => $first_round->slug]);
+
+    }
 
     //** SIGNUP AND LOGIN ACTIONS FOR TEAMS ------------------------------- */
 

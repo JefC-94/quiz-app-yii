@@ -119,7 +119,7 @@ class QuestionController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($slug)
+    public function actionCreate($slug) // SLUG = ROUND SLUG
     {
         
         $round = Round::getRound($slug);

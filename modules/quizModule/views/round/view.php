@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\LinkPager;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Round */
@@ -42,16 +43,22 @@ $sessionUser = Yii::$app->user->identity;
             <th>Actions</th>
         </thead>
         <tbody>
-        <?php foreach($model->questions as $index => $question){ 
+        <?php foreach($questions as $index => $question){ 
             $order_index = $question->order_index;
             $id = $question->id;
             $inquiry = $question->inquiry;
             $answer = $question->answer;
         ?>
             <tr class="question-container">
-                <td><?php echo $order_index; ?></td>
-                <td><a class="link" href="<?php echo \yii\helpers\Url::to(['question/view', 'slug' => $model->slug, 'order_index' => $order_index]) ?>"><?= $inquiry ?></a></td>
-                <td><?php echo $answer; ?></td>
+                <td>
+                    <?= $order_index; ?>
+                </td>
+                <td>
+                    <a class="link" href="<?php echo \yii\helpers\Url::to(['question/view', 'slug' => $model->slug, 'order_index' => $order_index]) ?>"><?= $inquiry ?></a>
+                </td>
+                <td>
+                    <?= $answer; ?>
+                </td>
                 <td class='move'>
                     <div class="move-one">
                         <?php 
@@ -91,6 +98,10 @@ $sessionUser = Yii::$app->user->identity;
         </tbody>
         </table>
     </div>
+
+    <?php echo LinkPager::widget([
+        'pagination' => $pages,
+    ]); ?>
 
     <div class="">
         <?php 

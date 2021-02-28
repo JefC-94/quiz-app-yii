@@ -93,6 +93,13 @@ class Round extends \yii\db\ActiveRecord
         return $this->hasMany(Question::className(), ['round_id' => 'id'])->orderBy('order_index ASC');
     }
 
+    public function getQuestionsPaged($pages)
+    {
+        $query = $this->hasMany(Question::className(), ['round_id' => 'id'])->orderBy('order_index ASC');
+        return $query->offset($pages->offset)->limit($pages->limit);
+    }
+
+
     //FIND Question by index
     public function getQuestionByIndex($id, $order_index)
     {
@@ -110,19 +117,19 @@ class Round extends \yii\db\ActiveRecord
      * Order queries, general so it can be used in any model!
      * 
     */
-    public function getItemsByIndex($order_index)
+    public function getItemsByIndex($order_index, $quiz_id)
     {
-        return self::find()->where(['order_index' => $order_index])->one();
+        return self::find()->where(['order_index' => $order_index, 'quiz_id' => $quiz_id])->one();
     }
 
-    public function getItemsBelowIndex($order_index)
+    public function getItemsBelowIndex($order_index, $quiz_id)
     {
-        return self::find()->where(['<', 'order_index', $order_index])->all();
+        return self::find()->where(['<', 'order_index', $order_index])->andWhere(['quiz_id' => $quiz_id])->all();
     }
 
-    public function getItemsAboveIndex($order_index)
+    public function getItemsAboveIndex($order_index, $quiz_id)
     {
-        return self::find()->where(['>', 'order_index', $order_index])->all();
+        return self::find()->where(['>', 'order_index', $order_index])->andWhere(['quiz_id' => $quiz_id])->all();
     }
 
 

@@ -7,6 +7,7 @@ use app\modules\quizModule\models\Round;
 use app\modules\quizModule\models\RoundSearch;
 use app\modules\quizModule\models\Question;
 use app\modules\quizModule\models\Record;
+use app\modules\quizModule\models\Quiz;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -105,19 +106,22 @@ class RoundController extends Controller
      */
     public function actionView($slug)
     {
-        
+        $itemsPerPage = 10;
+        if(!isset($_GET['per-page'])){$_GET['per-page'] = $itemsPerPage;}
+
         $model = $this->findModel($slug);
 
-        if($model->questions){
-            $indexes = array_map(function($n){return $n->order_index;}, $model->questions);
-            $highest_index = max($indexes);
-        } else {
-            $highest_index = 0;
-        }
+        $highest_index = count($model->questions);
         
+        $pages = new Pagination(['totalCount' => $highest_index, 'PageSize' => $itemsPerPage]);
+
+        $questions = $model->getQuestionsPaged($pages)->all();
+
         return $this->render('view', [
             'model' => $model,
             'highest_index' => $highest_index,
+            'pages' => $pages,
+            'questions' => $questions,
         ]);
     }
 
@@ -126,11 +130,16 @@ class RoundController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($slug) // SLUG = QUIZ SLUG
     {
+        
+        $quiz = Quiz::getQuiz($slug);
+        $roundCount = $quiz->getRounds()->count();
+        
         $model = new Round();
 
-        $model->order_index = Round::find()->max('order_index') + 1;
+        $model->quiz_id = $quiz->id;
+        $model->order_index = $roundCount + 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'slug' => $model->slug]);
@@ -171,11 +180,12 @@ class RoundController extends Controller
     public function actionDelete($slug)
     {
         $model = $this->findModel($slug);
-        
+        $quiz_id = $model->quiz_id;
+
         //sort next articles by lowering their index
         $changeIndex = $model->order_index;
 
-        $nextRound = Round::getItemsAboveIndex($changeIndex);
+        $nextRound = Round::getItemsAboveIndex($changeIndex, $quiz_id);
 
         foreach ($nextRound as $round){
             $new_index = $round->order_index - 1;
@@ -183,24 +193,9 @@ class RoundController extends Controller
             $round->save();
         }
 
-
         $model->delete();
 
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the first round, immediately starts this
-     */
-    public function actionStartquiz()
-    {
-
-        $model = Round::getItemsByIndex(1);
-
-        return $this->render('start', [
-            'model' => $model,
-        ]);
-
+        return $this->redirect(['quiz/view', 'slug' => $model->quiz->slug]);
     }
     
     /**
@@ -239,7 +234,7 @@ class RoundController extends Controller
             ]);
         }
 
-        $prevRound = Round::getItemsByIndex($model->order_index - 1);
+        $prevRound = Round::getItemsByIndex($model->order_index - 1, $model->quiz_id);
 
         return $this->actionViewsolution($prevRound->slug, count($prevRound->questions));
 
@@ -282,7 +277,7 @@ class RoundController extends Controller
 
         if($order_index > $highest_index){
 
-            $nextRound = Round::getItemsByIndex($model->order_index + 1);
+            $nextRound = Round::getItemsByIndex($model->order_index + 1, $model->quiz_id);
 
             //quiz is afgelopen!!
             if(!$nextRound){
@@ -333,7 +328,7 @@ class RoundController extends Controller
                 $obj->save();
             }
 
-            $nextRound = Round::getItemsByIndex($model->order_index+1);
+            $nextRound = Round::getItemsByIndex($model->order_index+1, $model->quiz_id);
 
             if(!$nextRound){
                 return $this->redirect('../home');
@@ -361,14 +356,15 @@ class RoundController extends Controller
     {
             
         $model = $this->findModel($slug);
+        $quiz_id = $model->quiz_id;
 
         if($pos === "down"){
             $newIndex = $model->order_index - 1;
-            $nextItem = Round::getItemsByIndex($newIndex);
+            $nextItem = Round::getItemsByIndex($newIndex, $quiz_id);
         }
         if($pos === "up"){
             $newIndex = $model->order_index + 1;
-            $nextItem = Round::getItemsByIndex($newIndex);
+            $nextItem = Round::getItemsByIndex($newIndex, $quiz_id);
         }
         if($pos === "down" or $pos === "up"){
             $nextItem->order_index = $model->order_index;
@@ -377,7 +373,7 @@ class RoundController extends Controller
 
         if($pos === "first"){
             $newIndex = 1;
-            $nextItems = Round::getItemsBelowIndex($model->order_index);
+            $nextItems = Round::getItemsBelowIndex($model->order_index, $quiz_id);
             foreach ($nextItems as $item){
                 $new_index = $item->order_index + 1;
                 $item->order_index = $new_index;
@@ -386,7 +382,7 @@ class RoundController extends Controller
         }
         if($pos === "last"){
             $newIndex = Round::find()->max('order_index');
-            $nextItems = Round::getItemsAboveIndex($model->order_index);
+            $nextItems = Round::getItemsAboveIndex($model->order_index, $quiz_id);
             foreach ($nextItems as $item){
                 $new_index = $item->order_index - 1;
                 $item->order_index = $new_index;
@@ -398,7 +394,7 @@ class RoundController extends Controller
 
         if($model->save()){
             //return to index with right pagination!!
-            return $this->redirect(['round/index']);
+            return $this->redirect(['quiz/view', 'slug' => $model->quiz->slug]);
         }
 
     }

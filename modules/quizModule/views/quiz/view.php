@@ -21,7 +21,7 @@ $sessionUser = Yii::$app->user->identity;
 
     <div class="userzone">
         <?= Html::a('Back to quizzes overview', ['quiz/index'], ['class' => 'userzonebtn']); ?>
-        <?= Html::a('Create Round', ['create'], ['class' => 'userzonebtn']) ?>
+        <?= Html::a('Create Round', ['round/create', 'slug' => $model->slug], ['class' => 'userzonebtn']) ?>
         <?= Html::a('Update', ['update', 'slug' => $model->slug], ['class' => 'userzonebtn']) ?>
         <?= Html::a('Delete', ['delete', 'slug' => $model->slug], [
             'class' => 'userzonebtn delete',
