@@ -189,11 +189,6 @@ class SiteController extends Controller
     public function actionLogout()
     {
 
-        if(!Yii::$app->team->isGuest){
-            $this->actionActiveround();
-            return false;
-        }
-
         if(!Yii::$app->user->isGuest){
             Yii::$app->user->logout();
             $url = Url::to(['/home']);
@@ -281,28 +276,6 @@ class SiteController extends Controller
         Yii::$app->team->logout();
         $url = Url::to(['/home']);
         return $this->redirect($url);
-    }
-
-    /**
-     * 
-     * Find active round for current team
-     * 
-     */
-    public function actionActiveround()
-    {
-        $sessionUser = Yii::$app->user->identity;
-        $lastRound = Record::find()->select('')->andWhere(['team_id' => Yii::$app->team->id])->innerJoinWith('round')->max('round.order_index');
-
-        if(!$lastRound){ $lastRound = 0; }
-
-        $round = Round::getItemsByIndex($lastRound + 1);
-
-        if(!$round){
-            //TO DO: Change this to "ending page" -> with a thank you message!
-            return $this->redirect('end');
-        }
-
-        return $this->redirect(['round/form', 'slug' => $round->slug]);
     }
 
 

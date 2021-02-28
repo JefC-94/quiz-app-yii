@@ -106,8 +106,6 @@ $config = [
                 'logout' => 'site/logout',
                 'teamlogout' => 'site/teamlogout',
                 'signup' => 'site/signup',
-                'signupteam' => 'site/signupteam',
-                'loginteam' => 'site/loginteam',
                 'contact' => 'site/contact',
                 'end' => 'site/end',
                 'mailsignup' => 'site/mailsignup',
@@ -128,7 +126,7 @@ $config = [
                 'quiz-event/<action:(index|create|delete|update|view|startquiz|signupteam|loginteam|activeround)>' => 'quizModule/quiz-event/<action>',
                 'quiz-event/<id>' => 'quizModule/quiz-event/view',
 
-                '<uuid>/<action:(signupteam)>' => 'quizModule/quiz-event/signupteam',
+                '<uuid>/<action:(signupteam|loginteam)>' => 'quizModule/quiz-event/<action>',
 
                 'team/<action:(index|create|delete|update)>' => 'quizModule/team/<action>',
                 'team/<id>' => 'quizModule/team/view',

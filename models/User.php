@@ -12,6 +12,7 @@ use kartik\password\StrengthValidator;
 * This is the model class for table "user".
 *
 * @property int $id
+* @property string $type
 * @property string $username
 * @property string $email
 * @property string $password
@@ -67,6 +68,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             'id' => 'ID',
+            'type' => 'Type',
             'username' => 'Username',
             'score' => 'Score',
             'email' => 'Email',
@@ -92,7 +94,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return self::findOne($id);
+        return self::findOne('id');
     }
 
     /**

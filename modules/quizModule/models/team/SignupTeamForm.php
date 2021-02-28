@@ -52,6 +52,8 @@ class SignupTeamForm extends Model
     {
 
         $team = new Team();
+        $team->varchar_id = "t" . $this->generateRandomString();
+        //TODO: nadenken of dit auto_increment kan zijn... is niet per se nodig maar mag wel!
         $team->username = strip_tags($this->username);
         $team->score = 0;
         $team->access_token = \Yii::$app->security->generateRandomString();
@@ -72,5 +74,16 @@ class SignupTeamForm extends Model
     \Yii::error( "User was not saved" . VarDumper::dumpAsString($team->errors));
     return false;
 
+    }
+
+
+    public function generateRandomString($length = 6) {
+        $characters = '0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

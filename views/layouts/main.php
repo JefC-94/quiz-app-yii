@@ -94,7 +94,6 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             <?php if(!Yii::$app->team->isGuest){
                 echo Yii::$app->team->identity->username;
             } ?>
-            
             </div>
         </nav>
 

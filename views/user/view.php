@@ -47,6 +47,9 @@ $sessionUser = Yii::$app->user->identity;
     <div class="admin-table-wrapper">
         <table class="admin compact">
             <tr>
+                <td>User Id</td><td><?= $model->id ?></td>
+            </tr>
+            <tr>
                 <td>Username</td><td><?= $model->username ?></td>
             </tr> 
             <tr>

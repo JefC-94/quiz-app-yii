@@ -13,6 +13,7 @@ use kartik\password\StrengthValidator;
 * This is the model class for table "teams".
 *
 * @property int $id
+* @property string $varchar_id
 * @property string $username
 * @property string $score
 * @property int $quiz_event_id
@@ -60,6 +61,7 @@ class Team extends ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             'id' => 'ID',
+            'type' => 'Type',
             'username' => 'Username',
             'score' => 'Score',
             'auth_key' => 'Auth Key',
@@ -72,7 +74,7 @@ class Team extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return self::findOne($id);
+        return self::findOne('varchar_id');
     }
 
     /**
@@ -99,7 +101,7 @@ class Team extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getId()
     {
-        return $this->id;
+        return $this->varchar_id;
     }
 
     /**
